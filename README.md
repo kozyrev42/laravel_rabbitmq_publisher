@@ -16,3 +16,19 @@
 `php artisan make:command TestNotification`
 
 - отправка сообщений по средствам канала RabbitMQChannel
+
+5. генерация класс События (Инициализация/определение события, которое будет прослушиваться Слушателем)
+`php artisan make:event PostCreated`
+
+
+- создание слушателя SendPostCreatedNotification.php (в слушателе будет выполняться какая-либо логика в ответ на событие):
+`php artisan make:listener SendPostCreatedNotification --event=PostCreated`
+
+
+- в EventServiceProvider.php -> Регистрация Слушателя и События
+
+
+- в NotificationServiceProvider.php -> Регистрируем кастомный канал уведомлений RabbitMQ
+
+
+- в PostController.php -> Генерация события сразу после записи в базу

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 
@@ -17,10 +18,13 @@ class PostController extends Controller
     {
         $data = $request->all();
 
-        $person = Posts::create($data);
+        $post = Posts::create($data);
+
+        // Генерация события
+        event(new PostCreated($post));
 
         return response()->json([
-            'data' => $person,
+            'data' => $post,
         ]);
     }
 
